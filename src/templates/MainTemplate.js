@@ -1,11 +1,12 @@
 import React from 'react'
 import ApplicationBar from '../components/ApplicationBar'
+import { Container } from '@mui/material'
 
 const MainTemplate = ({ children }) => {
     return (
         <div>
             <ApplicationBar />
-            {children}
+            <Container style={{ marginTop: '7rem' }}>{children}</Container>
         </div>
     )
 }
