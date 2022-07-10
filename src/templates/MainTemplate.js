@@ -6,7 +6,9 @@ const MainTemplate = ({ children }) => {
     return (
         <div>
             <ApplicationBar />
-            <Container style={{ marginTop: '7rem' }}>{children}</Container>
+            <Container style={{ marginTop: '7rem', marginBottom: '7rem' }}>
+                {children}
+            </Container>
         </div>
     );
 };

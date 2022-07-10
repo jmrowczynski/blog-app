@@ -1,12 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
-import { home } from './routes';
+import { home, singlePost } from './routes';
+import SinglePost from '../pages/SinglePost';
 
 const Routing = () => {
     return (
         <Routes>
-            <Route exact path={home} element={<Home />} />
+            <Route index path={home} element={<Home />} />
+            <Route path={singlePost} element={<SinglePost />} />
         </Routes>
     );
 };
