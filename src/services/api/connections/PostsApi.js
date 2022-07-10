@@ -2,7 +2,7 @@ import { axiosInstance } from '../axios';
 
 class PostsApi {
     static getAll(params) {
-        return axiosInstance.get('/posts', params);
+        return axiosInstance.get('/posts', { params });
     }
 }
 
