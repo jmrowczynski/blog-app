@@ -1,16 +1,15 @@
 import './App.css';
-import { Button } from '@mui/material';
-import MainTemplate from './templates/MainTemplate';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
+import Routing from './routing';
+import { BrowserRouter as Router } from 'react-router-dom';
 const queryClient = new QueryClient();
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <MainTemplate>
-                <Button variant="contained">aaa</Button>
-            </MainTemplate>
+            <Router>
+                <Routing />
+            </Router>
         </QueryClientProvider>
     );
 }
