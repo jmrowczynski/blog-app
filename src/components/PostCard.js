@@ -14,7 +14,7 @@ const PostCard = (props) => {
     const { title, content, id } = props;
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {title}
