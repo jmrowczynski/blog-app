@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     CircularProgress,
@@ -10,6 +10,7 @@ import MainTemplate from '../templates/MainTemplate';
 import { usePostsQuery } from '../services/api/hooks/usePostsQuery';
 import PostCard from '../components/PostCard';
 import { useDebounce } from 'use-debounce';
+import { NumberParam, StringParam, useQueryParam } from 'use-query-params';
 
 const SearchInput = ({ value, onChange }) => {
     return (
@@ -24,48 +25,53 @@ const SearchInput = ({ value, onChange }) => {
 };
 
 const Home = () => {
-    const [page, setPage] = useState(1);
-    const [search, setSearch] = useState('');
-    const [debounceSearch] = useDebounce(search, 500);
+    const [searchParam, setSearchParam] = useQueryParam('search', StringParam);
+    const [searchState, setSearchState] = useState(searchParam);
+    const [debounceSearch] = useDebounce(searchState, 500);
+
+    const [page, setPage] = useQueryParam('page', NumberParam);
     const posts = usePostsQuery({ page, search: debounceSearch, per_page: 12 });
 
-    if (posts.isLoading)
-        return (
-            <MainTemplate>
-                <SearchInput
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                    <CircularProgress />
-                </Box>
-            </MainTemplate>
-        );
+    useEffect(() => {
+        setSearchParam(searchState);
+        setPage(undefined);
+    }, [debounceSearch]);
 
     return (
         <MainTemplate>
             <SearchInput
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={searchState}
+                onChange={(e) => setSearchState(e.target.value)}
             />
-
-            <Grid container spacing={2} style={{ marginBottom: '3rem' }}>
-                {posts.data?.data?.data.map((post) => (
-                    <Grid key={post.id} item xs={12} sm={6} md={4}>
-                        <PostCard
-                            id={post.id}
-                            title={post.title}
-                            content={post.content}
-                        />
+            {posts.isLoading ? (
+                <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <div>
+                    <Grid
+                        container
+                        spacing={2}
+                        style={{ marginBottom: '3rem' }}
+                    >
+                        {posts.data?.data?.data.map((post) => (
+                            <Grid key={post.id} item xs={12} sm={6} md={4}>
+                                <PostCard
+                                    id={post.id}
+                                    title={post.title}
+                                    content={post.content}
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-            </Grid>
-            <Pagination
-                count={posts?.data?.data?.last_page}
-                onChange={(event, value) => setPage(value)}
-                page={page}
-                style={{ display: 'flex', justifyContent: 'center' }}
-            />
+                    <Pagination
+                        count={posts?.data?.data?.last_page}
+                        onChange={(event, value) => setPage(value)}
+                        page={page}
+                        style={{ display: 'flex', justifyContent: 'center' }}
+                    />
+                </div>
+            )}
         </MainTemplate>
     );
 };
