@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import MainTemplate from '../templates/MainTemplate';
 
 const SinglePost = () => {
-    const { id } = useParams();
-    return <MainTemplate>Post id: {id}</MainTemplate>;
+    const { slug } = useParams();
+    return <MainTemplate>Post slug: {slug}</MainTemplate>;
 };
 
 export default SinglePost;

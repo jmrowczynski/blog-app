@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { posts } from '../routing/routes';
 
 const PostCard = (props) => {
-    const { title, content, id } = props;
+    const { title, content, slug } = props;
 
     return (
         <Card>
@@ -24,7 +24,7 @@ const PostCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" component={Link} to={`${posts}/${id}`}>
+                <Button size="small" component={Link} to={`${posts}/${slug}`}>
                     Read More
                 </Button>
             </CardActions>
