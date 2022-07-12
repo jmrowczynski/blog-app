@@ -10,7 +10,7 @@ import MainTemplate from '../templates/MainTemplate';
 import { usePostsQuery } from '../services/api/hooks/usePostsQuery';
 import PostCard from '../components/PostCard';
 import { useDebounce } from 'use-debounce';
-import { NumberParam, StringParam, useQueryParam } from 'use-query-params';
+import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 
 const SearchInput = ({ value, onChange }) => {
     return (
@@ -25,16 +25,18 @@ const SearchInput = ({ value, onChange }) => {
 };
 
 const Home = () => {
-    const [searchParam, setSearchParam] = useQueryParam('search', StringParam);
-    const [searchState, setSearchState] = useState(searchParam);
+    const [params, setParams] = useQueryParams({
+        search: StringParam,
+        page: NumberParam,
+    });
+    const { search, page } = params;
+    const [searchState, setSearchState] = useState(search);
     const [debounceSearch] = useDebounce(searchState, 500);
 
-    const [page, setPage] = useQueryParam('page', NumberParam);
     const posts = usePostsQuery({ page, search: debounceSearch, per_page: 12 });
 
     useEffect(() => {
-        setSearchParam(searchState);
-        setPage(undefined);
+        setParams({ page: undefined, search: debounceSearch });
     }, [debounceSearch]);
 
     return (
@@ -66,7 +68,7 @@ const Home = () => {
                     </Grid>
                     <Pagination
                         count={posts?.data?.data?.last_page}
-                        onChange={(event, value) => setPage(value)}
+                        onChange={(event, value) => setParams({ page: value })}
                         page={page}
                         style={{ display: 'flex', justifyContent: 'center' }}
                     />
