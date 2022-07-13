@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { useMemo } from 'react';
 import { QueryParamProvider } from 'use-query-params';
+import AppProvider from './context/app.context';
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,9 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <Router>
                 <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-                    <Routing />
+                    <AppProvider>
+                        <Routing />
+                    </AppProvider>
                 </QueryParamProvider>
             </Router>
         </QueryClientProvider>

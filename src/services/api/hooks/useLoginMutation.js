@@ -1,12 +1,13 @@
 import { useMutation } from 'react-query';
 import AuthApi from '../connections/AuthApi';
-import { useUserLogin } from '../../../hooks/useUserLogin';
+import { useAppContext } from '../../../context/app.context';
 
 export const useLoginMutation = () => {
-    const { setUser } = useUserLogin();
+    const { saveUser } = useAppContext();
+
     return useMutation((body) => AuthApi.login(body), {
         onSuccess(data) {
-            setUser(data.data);
+            saveUser(data.data);
         },
     });
 };

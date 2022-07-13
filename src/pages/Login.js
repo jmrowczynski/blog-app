@@ -21,7 +21,7 @@ const Login = () => {
                     onSubmit={(e) => {
                         e.preventDefault();
 
-                        loginMutation.mutate({
+                        return loginMutation.mutate({
                             email: 'test@test.pl',
                             password: 'poziomki',
                         });
