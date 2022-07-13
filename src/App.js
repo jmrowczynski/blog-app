@@ -9,8 +9,11 @@ import {
 import { useMemo } from 'react';
 import { QueryParamProvider } from 'use-query-params';
 import AppProvider from './context/app.context';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 1000 * 10 } }, // 10s
+});
 
 const RouteAdapter = ({ children }) => {
     const navigate = useNavigate();
@@ -40,6 +43,7 @@ function App() {
                     </AppProvider>
                 </QueryParamProvider>
             </Router>
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 }
