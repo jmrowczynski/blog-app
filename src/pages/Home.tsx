@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
     Box,
     CircularProgress,
     Grid,
     Pagination,
+    PaginationProps,
     TextField,
 } from '@mui/material';
 import MainTemplate from '../templates/MainTemplate';
 import { usePostsQuery } from '../services/api/hooks/usePostsQuery';
-import PostCard from '../components/PostCard';
+import PostCard, { PostCardProps } from '../components/PostCard';
 import { useDebounce } from 'use-debounce';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 
-const SearchInput = ({ value, onChange }) => {
+const SearchInput: React.FunctionComponent<{
+    value?: string | null;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}> = ({ value, onChange }) => {
     return (
         <TextField
             style={{ marginBottom: '2rem' }}
@@ -56,7 +60,7 @@ const Home = () => {
                         spacing={2}
                         style={{ marginBottom: '3rem' }}
                     >
-                        {posts.data?.data?.data.map((post) => (
+                        {posts.data?.data?.data.map((post: PostCardProps) => (
                             <Grid key={post.id} item xs={12} sm={6} md={4}>
                                 <PostCard
                                     slug={post.slug}
@@ -69,7 +73,7 @@ const Home = () => {
                     <Pagination
                         count={posts?.data?.data?.last_page}
                         onChange={(event, value) => setParams({ page: value })}
-                        page={page}
+                        page={page as PaginationProps['page']}
                         style={{ display: 'flex', justifyContent: 'center' }}
                     />
                 </div>

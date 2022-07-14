@@ -17,6 +17,6 @@ export interface IUserLoginRequest {
 
 export interface IPostsParams {
     per_page?: number;
-    page?: number;
-    search?: string;
+    page?: number | null;
+    search?: string | null;
 }

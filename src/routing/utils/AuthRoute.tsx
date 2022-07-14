@@ -3,7 +3,9 @@ import { useAppContext } from '../../context/app.context';
 import { Navigate } from 'react-router-dom';
 import { home } from '../routes';
 
-const AuthRoute = ({ children }) => {
+const AuthRoute: React.FunctionComponent<{ children?: React.ReactNode }> = ({
+    children,
+}) => {
     const { token } = useAppContext();
 
     if (!token) {

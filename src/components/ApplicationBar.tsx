@@ -1,11 +1,11 @@
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { login } from '../routing/routes';
+import { login, account } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
 import React from 'react';
 
 const ApplicationBar: React.FunctionComponent = () => {
-    const { token } = useAppContext();
+    const { token, user } = useAppContext();
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
@@ -23,9 +23,17 @@ const ApplicationBar: React.FunctionComponent = () => {
                             <Button color="inherit">Register</Button>
                         </>
                     ) : (
-                        <Button color="inherit" style={{ marginLeft: 'auto' }}>
-                            Account
-                        </Button>
+                        <>
+                            <Button
+                                component={Link}
+                                to={account}
+                                color="inherit"
+                                style={{ marginLeft: 'auto' }}
+                            >
+                                My account
+                            </Button>
+                            <Button color="inherit">Logout</Button>
+                        </>
                     )}
                 </Toolbar>
             </AppBar>
