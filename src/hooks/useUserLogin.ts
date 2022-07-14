@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../services/api/axios';
+import { IUserLoginResponse } from '../services/types';
 
 const getUser = () => {
     const storageUser = localStorage.getItem('user');
-    return JSON.parse(storageUser);
+    return JSON.parse(storageUser || '');
 };
 
 const getToken = () => {
     const storageToken = localStorage.getItem('token');
-    return JSON.parse(storageToken);
+    return JSON.parse(storageToken || '');
 };
 
 export const useUserLogin = () => {
@@ -21,7 +22,7 @@ export const useUserLogin = () => {
         }
     }, [token]);
 
-    const saveUser = ({ user, token }) => {
+    const saveUser = ({ user, token }: IUserLoginResponse) => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', JSON.stringify(token));
         setUser(user);

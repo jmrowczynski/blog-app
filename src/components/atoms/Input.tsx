@@ -1,8 +1,20 @@
-import { TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
-import PropTypes from 'prop-types';
+import { TextField, TextFieldProps } from '@mui/material';
+import { Controller, ControllerProps } from 'react-hook-form';
+import React from 'react';
 
-const Input = ({ control, name, controllerProps, inputProps }) => {
+export interface IInput {
+    control: any;
+    name: string;
+    controllerProps?: Omit<ControllerProps, any>;
+    inputProps?: TextFieldProps;
+}
+
+const Input: React.FunctionComponent<IInput> = ({
+    control,
+    name,
+    controllerProps,
+    inputProps,
+}) => {
     return (
         <Controller
             name={name}
@@ -21,10 +33,3 @@ const Input = ({ control, name, controllerProps, inputProps }) => {
 };
 
 export default Input;
-
-Input.propTypes = {
-    name: PropTypes.string.isRequired,
-    control: PropTypes.any,
-    controllerProps: PropTypes.any,
-    inputProps: PropTypes.any,
-};

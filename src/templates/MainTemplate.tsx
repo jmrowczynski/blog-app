@@ -2,7 +2,9 @@ import React from 'react';
 import ApplicationBar from '../components/ApplicationBar';
 import { Container } from '@mui/material';
 
-const MainTemplate = ({ children }) => {
+const MainTemplate: React.FunctionComponent<{ children: React.ReactNode }> = ({
+    children,
+}) => {
     return (
         <div>
             <ApplicationBar />

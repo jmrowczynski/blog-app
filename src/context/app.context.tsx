@@ -1,9 +1,18 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useUserLogin } from '../hooks/useUserLogin';
+import { IUserLoginResponse } from '../services/types';
 
-const AppContext = createContext({});
+interface IContext {
+    saveUser: (data: IUserLoginResponse) => void;
+    user: IUserLoginResponse['user'];
+    token: IUserLoginResponse['token'];
+}
 
-const AppProvider = ({ children }) => {
+const AppContext = createContext<IContext | undefined>(undefined);
+
+const AppProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
+    children,
+}) => {
     const { saveUser, user, token } = useUserLogin();
 
     return (

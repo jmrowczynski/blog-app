@@ -2,8 +2,9 @@ import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { login } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
+import React from 'react';
 
-const ApplicationBar = () => {
+const ApplicationBar: React.FunctionComponent = () => {
     const { token } = useAppContext();
     return (
         <Box sx={{ flexGrow: 1 }}>

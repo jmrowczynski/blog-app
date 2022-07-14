@@ -4,6 +4,11 @@ import { useLoginMutation } from '../services/api/hooks/useLoginMutation';
 import { useForm } from 'react-hook-form';
 import Input from '../components/atoms/Input';
 
+interface FormInputs {
+    email: string;
+    password: string;
+}
+
 const Login = () => {
     const loginMutation = useLoginMutation();
 
@@ -11,13 +16,13 @@ const Login = () => {
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm({
+    } = useForm<FormInputs>({
         defaultValues: {
             email: '',
-            password: {},
+            password: '',
         },
     });
-    const onSubmit = (data) => loginMutation.mutate(data);
+    const onSubmit = handleSubmit((data) => loginMutation.mutate(data));
 
     return (
         <MainTemplate>
@@ -32,7 +37,7 @@ const Login = () => {
                     sx={{
                         '& .MuiTextField-root': { mb: 2 },
                     }}
-                    onSubmit={handleSubmit(onSubmit)}
+                    onSubmit={onSubmit}
                 >
                     <Input
                         name="email"

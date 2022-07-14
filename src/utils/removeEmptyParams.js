@@ -1,3 +1,5 @@
+// TODO: remove?
+
 export const removeEmptyParams = (params = {}) => {
     return Object.keys(params)
         .filter((key) => !!params[key])
