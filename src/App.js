@@ -10,6 +10,7 @@ import { useMemo } from 'react';
 import { QueryParamProvider } from 'use-query-params';
 import AppProvider from './context/app.context';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { SnackbarProvider } from 'notistack';
 
 const queryClient = new QueryClient({
     defaultOptions: { queries: { staleTime: 1000 * 10 } }, // 10s
@@ -38,9 +39,11 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <Router>
                 <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-                    <AppProvider>
-                        <Routing />
-                    </AppProvider>
+                    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+                        <AppProvider>
+                            <Routing />
+                        </AppProvider>
+                    </SnackbarProvider>
                 </QueryParamProvider>
             </Router>
             <ReactQueryDevtools initialIsOpen={false} />

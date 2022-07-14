@@ -17,7 +17,14 @@ const AppProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
     const { saveUser, removeUser, user, token } = useUserLogin();
 
     return (
-        <AppContext.Provider value={{ saveUser, removeUser, user, token }}>
+        <AppContext.Provider
+            value={{
+                saveUser,
+                removeUser,
+                user,
+                token,
+            }}
+        >
             {children}
         </AppContext.Provider>
     );
