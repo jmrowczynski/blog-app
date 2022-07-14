@@ -37,5 +37,12 @@ export const useUserLogin = () => {
         setToken(token);
     };
 
-    return { user, token, saveUser };
+    const removeUser = () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        setUser(undefined);
+        setToken(undefined);
+    };
+
+    return { user, token, saveUser, removeUser };
 };

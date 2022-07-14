@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import { login, account } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
 import React from 'react';
+import { useLogoutMutation } from '../services/api/hooks/useLogoutMutation';
 
 const ApplicationBar: React.FunctionComponent = () => {
-    const { token, user } = useAppContext();
+    const { token } = useAppContext();
+    const logoutMutation = useLogoutMutation();
+
+    const handleLogout = () => logoutMutation.mutate();
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
@@ -32,7 +37,9 @@ const ApplicationBar: React.FunctionComponent = () => {
                             >
                                 My account
                             </Button>
-                            <Button color="inherit">Logout</Button>
+                            <Button color="inherit" onClick={handleLogout}>
+                                Logout
+                            </Button>
                         </>
                     )}
                 </Toolbar>
