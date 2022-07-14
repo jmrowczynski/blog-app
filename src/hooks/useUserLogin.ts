@@ -4,12 +4,20 @@ import { IUserLoginResponse } from '../services/types';
 
 const getUser = () => {
     const storageUser = localStorage.getItem('user');
-    return JSON.parse(storageUser || '');
+    if (storageUser) {
+        return JSON.parse(storageUser);
+    }
+
+    return null;
 };
 
 const getToken = () => {
     const storageToken = localStorage.getItem('token');
-    return JSON.parse(storageToken || '');
+    if (storageToken) {
+        return JSON.parse(storageToken);
+    }
+
+    return null;
 };
 
 export const useUserLogin = () => {
