@@ -1,9 +1,23 @@
 import MainTemplate from '../templates/MainTemplate';
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useLoginMutation } from '../services/api/hooks/useLoginMutation';
+import { useForm } from 'react-hook-form';
+import Input from '../components/atoms/Input';
 
 const Login = () => {
     const loginMutation = useLoginMutation();
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            email: '',
+            password: {},
+        },
+    });
+    const onSubmit = (data) => loginMutation.mutate(data);
 
     return (
         <MainTemplate>
@@ -18,22 +32,45 @@ const Login = () => {
                     sx={{
                         '& .MuiTextField-root': { mb: 2 },
                     }}
-                    onSubmit={(e) => {
-                        e.preventDefault();
-
-                        return loginMutation.mutate({
-                            email: 'test@test.pl',
-                            password: 'poziomki',
-                        });
-                    }}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
-                    <TextField required id="email" label="Email" fullWidth />
-                    <TextField
-                        required
-                        id="password"
-                        label="Password"
-                        type="password"
-                        fullWidth
+                    <Input
+                        name="email"
+                        control={control}
+                        inputProps={{
+                            fullWidth: true,
+                            required: true,
+                            type: 'email',
+                            label: 'Email',
+                            error: !!errors?.email?.message,
+                            helperText: errors?.email?.message,
+                        }}
+                        controllerProps={{
+                            rules: {
+                                required: 'Email is required',
+                                pattern: {
+                                    message: 'Email is not valid',
+                                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                },
+                            },
+                        }}
+                    />
+                    <Input
+                        name="password"
+                        control={control}
+                        inputProps={{
+                            fullWidth: true,
+                            required: true,
+                            type: 'password',
+                            label: 'Password',
+                            error: !!errors?.password?.message,
+                            helperText: errors?.password?.message,
+                        }}
+                        controllerProps={{
+                            rules: {
+                                required: 'Password is required',
+                            },
+                        }}
                     />
                     <Button
                         variant="contained"
