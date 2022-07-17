@@ -4,9 +4,9 @@ import { login, account, home } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
 import React from 'react';
 import { useLogoutMutation } from '../services/api/hooks/useLogoutMutation';
+import Protect from '../routing/utils/Protect';
 
 const ApplicationBar: React.FunctionComponent = () => {
-    const { token } = useAppContext();
     const logoutMutation = useLogoutMutation();
 
     const handleLogout = () => logoutMutation.mutate();
@@ -18,7 +18,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                     <Button color="inherit" component={Link} to={home}>
                         Home
                     </Button>
-                    {!token ? (
+                    <Protect rules={['not_logged_in']}>
                         <>
                             <Button
                                 color="inherit"
@@ -30,7 +30,8 @@ const ApplicationBar: React.FunctionComponent = () => {
                             </Button>
                             <Button color="inherit">Register</Button>
                         </>
-                    ) : (
+                    </Protect>
+                    <Protect>
                         <>
                             <Button
                                 component={Link}
@@ -44,7 +45,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                                 Logout
                             </Button>
                         </>
-                    )}
+                    </Protect>
                 </Toolbar>
             </AppBar>
         </Box>
