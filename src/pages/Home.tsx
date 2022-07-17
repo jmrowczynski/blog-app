@@ -72,7 +72,10 @@ const Home = () => {
                     </Grid>
                     <Pagination
                         count={posts?.data?.data?.last_page}
-                        onChange={(event, value) => setParams({ page: value })}
+                        onChange={(event, value) => {
+                            setParams({ page: value });
+                            window.scroll(0, 0);
+                        }}
                         page={page as PaginationProps['page']}
                         style={{ display: 'flex', justifyContent: 'center' }}
                     />
