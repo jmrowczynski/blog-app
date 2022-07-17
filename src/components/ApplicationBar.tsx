@@ -1,13 +1,13 @@
-import { AppBar, Box, Button, Toolbar } from '@mui/material';
+import { AppBar, Avatar, Box, Button, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { login, account, home } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
 import React from 'react';
 import { useLogoutMutation } from '../services/api/hooks/useLogoutMutation';
-import Protect from '../routing/utils/Protect';
 
 const ApplicationBar: React.FunctionComponent = () => {
     const logoutMutation = useLogoutMutation();
+    const { token, user } = useAppContext();
 
     const handleLogout = () => logoutMutation.mutate();
 
@@ -18,7 +18,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                     <Button color="inherit" component={Link} to={home}>
                         Home
                     </Button>
-                    <Protect rules={['not_logged_in']}>
+                    {!token ? (
                         <>
                             <Button
                                 color="inherit"
@@ -30,8 +30,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                             </Button>
                             <Button color="inherit">Register</Button>
                         </>
-                    </Protect>
-                    <Protect>
+                    ) : (
                         <>
                             <Button
                                 component={Link}
@@ -40,12 +39,23 @@ const ApplicationBar: React.FunctionComponent = () => {
                                 style={{ marginLeft: 'auto' }}
                             >
                                 My account
+                                <Avatar
+                                    alt={user.name}
+                                    src={user?.avatar}
+                                    sx={{
+                                        marginLeft: 1,
+                                        width: 30,
+                                        height: 30,
+                                    }}
+                                >
+                                    {user.name[0]}
+                                </Avatar>
                             </Button>
                             <Button color="inherit" onClick={handleLogout}>
                                 Logout
                             </Button>
                         </>
-                    </Protect>
+                    )}
                 </Toolbar>
             </AppBar>
         </Box>

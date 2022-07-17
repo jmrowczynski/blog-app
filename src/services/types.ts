@@ -6,6 +6,7 @@ export interface IUserLoginResponse {
         email_verified_at?: any;
         created_at: Date;
         updated_at: Date;
+        avatar?: string;
     };
     token: string;
 }

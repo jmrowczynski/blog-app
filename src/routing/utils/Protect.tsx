@@ -19,7 +19,7 @@ const Protect: React.FunctionComponent<{
         return <Navigate replace to={home} />;
     }
 
-    if (!token) {
+    if (!rules.length && !token) {
         return <Navigate replace to={home} />;
     }
 
