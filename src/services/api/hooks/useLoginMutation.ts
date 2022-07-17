@@ -5,6 +5,7 @@ import { IUserLoginRequest } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { home } from '../../../routing/routes';
 import { useSnackbar } from 'notistack';
+import { AxiosError } from 'axios';
 
 export const useLoginMutation = () => {
     const { saveUser } = useAppContext();
@@ -16,6 +17,12 @@ export const useLoginMutation = () => {
             saveUser(data.data);
             enqueueSnackbar('Logged in!', { variant: 'success' });
             navigate(home, { replace: true });
+        },
+
+        onError(error: AxiosError<{ message?: string }>) {
+            enqueueSnackbar(error.response?.data?.message, {
+                variant: 'error',
+            });
         },
     });
 };

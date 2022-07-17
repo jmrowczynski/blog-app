@@ -1,8 +1,9 @@
 import MainTemplate from '../templates/MainTemplate';
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useLoginMutation } from '../services/api/hooks/useLoginMutation';
 import { useForm } from 'react-hook-form';
 import Input from '../components/atoms/Input';
+import Button from '../components/atoms/Button';
 
 interface FormInputs {
     email: string;
@@ -82,6 +83,7 @@ const Login = () => {
                         fullWidth
                         size="large"
                         type="submit"
+                        loading={loginMutation.isLoading}
                     >
                         login
                     </Button>
