@@ -6,12 +6,12 @@ import { AxiosError } from 'axios';
 import UserApi from '../connections/UserApi';
 
 export const useEditUserMutation = () => {
-    const { saveUser } = useAppContext();
+    const { updateUser } = useAppContext();
     const { enqueueSnackbar } = useSnackbar();
 
     return useMutation((body: IEditUserRequest) => UserApi.editMe(body), {
         onSuccess(data) {
-            saveUser(data.data);
+            updateUser(data.data.data);
             enqueueSnackbar('Updated successfully!', { variant: 'success' });
         },
 

@@ -37,6 +37,11 @@ export const useUserLogin = () => {
         setToken(token);
     };
 
+    const updateUser = (data: IUserLoginResponse['user']) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        setUser(data);
+    };
+
     const removeUser = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
@@ -44,5 +49,5 @@ export const useUserLogin = () => {
         setToken(undefined);
     };
 
-    return { user, token, saveUser, removeUser };
+    return { user, token, saveUser, removeUser, updateUser };
 };
