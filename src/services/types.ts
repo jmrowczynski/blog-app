@@ -21,3 +21,8 @@ export interface IPostsParams {
     page?: number | null;
     search?: string | null;
 }
+
+export interface IEditUserRequest {
+    name?: string;
+    avatar?: File;
+}
