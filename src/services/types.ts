@@ -24,5 +24,5 @@ export interface IPostsParams {
 
 export interface IEditUserRequest {
     name?: string;
-    avatar?: File;
+    avatar?: File[];
 }

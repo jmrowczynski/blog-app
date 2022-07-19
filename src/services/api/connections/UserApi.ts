@@ -1,9 +1,10 @@
 import { axiosInstance } from '../axios';
-import { IEditUserRequest } from '../../types';
 
 class UserApi {
-    static editMe(body: IEditUserRequest) {
-        return axiosInstance.post('/me', body);
+    static editMe(body: FormData) {
+        return axiosInstance.post('/me', body, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
     }
 }
 
