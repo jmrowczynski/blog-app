@@ -8,6 +8,7 @@ interface IContext {
     removeUser: () => void;
     user: IUserLoginResponse['user'];
     token: IUserLoginResponse['token'];
+    isAdmin: boolean;
 }
 
 const AppContext = createContext<IContext | undefined>(undefined);
@@ -15,7 +16,8 @@ const AppContext = createContext<IContext | undefined>(undefined);
 const AppProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const { saveUser, removeUser, updateUser, user, token } = useUserLogin();
+    const { saveUser, removeUser, updateUser, user, token, isAdmin } =
+        useUserLogin();
 
     return (
         <AppContext.Provider
@@ -25,6 +27,7 @@ const AppProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
                 updateUser,
                 user,
                 token,
+                isAdmin,
             }}
         >
             {children}

@@ -11,6 +11,10 @@ class UserApi {
     static getPosts(params?: IPostsParams) {
         return axiosInstance.get('/me/posts', { params });
     }
+
+    static getUsers(params?: IPostsParams) {
+        return axiosInstance.get('/users', { params });
+    }
 }
 
 export default UserApi;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { axiosInstance } from '../services/api/axios';
 import { IUserLoginResponse } from '../services/types';
 
@@ -20,15 +20,27 @@ const getToken = () => {
     return null;
 };
 
+const isUserAdmin = (roles: { id: number; name: string }[]) => {
+    return roles.map((role) => role.id).includes(1);
+};
+
 export const useUserLogin = () => {
     const [user, setUser] = useState(getUser());
     const [token, setToken] = useState(getToken());
+
+    const isAdmin = useMemo(() => {
+        if (user?.roles) {
+            return isUserAdmin(user.roles);
+        }
+
+        return false;
+    }, [user]);
 
     useEffect(() => {
         if (token) {
             axiosInstance.defaults.headers.common.Authorization = token;
         }
-    }, [token]);
+    }, [token, user?.id]);
 
     const saveUser = ({ user, token }: IUserLoginResponse) => {
         localStorage.setItem('user', JSON.stringify(user));
@@ -49,5 +61,5 @@ export const useUserLogin = () => {
         setToken(undefined);
     };
 
-    return { user, token, saveUser, removeUser, updateUser };
+    return { user, token, saveUser, removeUser, updateUser, isAdmin };
 };

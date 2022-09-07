@@ -1,13 +1,16 @@
+export interface IUser {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at?: any;
+    created_at: Date;
+    updated_at: Date;
+    avatar?: string;
+    roles: { id: number; name: string };
+}
+
 export interface IUserLoginResponse {
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        email_verified_at?: any;
-        created_at: Date;
-        updated_at: Date;
-        avatar?: string;
-    };
+    user: IUser;
     token: string;
 }
 
@@ -17,6 +20,12 @@ export interface IUserLoginRequest {
 }
 
 export interface IPostsParams {
+    per_page?: number;
+    page?: number | null;
+    search?: string | null;
+}
+
+export interface IUsersParams {
     per_page?: number;
     page?: number | null;
     search?: string | null;
