@@ -1,3 +1,5 @@
+export type Role = 'admin' | 'writer';
+
 export interface IUser {
     id: number;
     name: string;
@@ -6,7 +8,7 @@ export interface IUser {
     created_at: Date;
     updated_at: Date;
     avatar?: string;
-    roles: { id: number; name: string }[];
+    roles: { id: number; name: Role }[];
 }
 
 export interface IUserLoginResponse {

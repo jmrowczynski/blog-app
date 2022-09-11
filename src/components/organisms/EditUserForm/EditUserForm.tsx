@@ -4,17 +4,21 @@ import Input from '../../atoms/Input';
 import { DropzoneField } from '../../atoms/DropzoneInput';
 import Button from '../../atoms/Button';
 import { useEditUserMutation } from '../../../services/api/hooks/useEditUserMutation';
-import { useAppContext } from '../../../context/app.context';
 import { useForm } from 'react-hook-form';
-import { IEditUserRequest } from '../../../services/types';
+import { IEditUserRequest, IUser } from '../../../services/types';
 
 const AvatarImage = (props: ImgHTMLAttributes<HTMLImageElement>) => (
-    <img width={120} height={120} {...props} style={{ objectFit: 'cover' }} />
+    <img
+        alt="avatar"
+        width={120}
+        height={120}
+        {...props}
+        style={{ objectFit: 'cover' }}
+    />
 );
 
-const EditUserForm = () => {
+const EditUserForm = ({ user }: { user: IUser }) => {
     const editUserMutation = useEditUserMutation();
-    const { user } = useAppContext();
 
     const {
         control,
