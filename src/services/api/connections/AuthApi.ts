@@ -1,5 +1,9 @@
 import { axiosInstance } from '../axios';
-import { IUserLoginRequest, IUserForgotPasswordRequest } from '../../types';
+import {
+    IUserLoginRequest,
+    IUserForgotPasswordRequest,
+    IUserResetPasswordRequest,
+} from '../../types';
 
 class AuthApi {
     static login(body: IUserLoginRequest) {
@@ -18,6 +22,10 @@ class AuthApi {
 
     static forgot(body: IUserForgotPasswordRequest) {
         return axiosInstance.post('/forgot-password', body);
+    }
+
+    static reset(body: IUserResetPasswordRequest) {
+        return axiosInstance.post('/reset-password', body);
     }
 }
 

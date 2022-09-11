@@ -10,7 +10,7 @@ interface FormInputs {
     email: string;
 }
 
-const Login = () => {
+const ForgotPassword = () => {
     const forgotPasswordMutation = useForgotPasswordMutation();
 
     const {
@@ -77,4 +77,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ForgotPassword;
