@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { axiosInstance } from '../services/api/axios';
 import { IUserLoginResponse } from '../services/types';
+import { isUserAdmin } from '../utils/isUserAdmin';
 
 const getUser = () => {
     const storageUser = localStorage.getItem('user');
@@ -18,10 +19,6 @@ const getToken = () => {
     }
 
     return null;
-};
-
-const isUserAdmin = (roles: { id: number; name: string }[]) => {
-    return roles.map((role) => role.id).includes(1);
 };
 
 export const useUserLogin = () => {
