@@ -37,3 +37,7 @@ export interface IEditUserRequest {
     name?: string;
     avatar?: File[];
 }
+
+export interface IUserForgotPasswordRequest {
+    email: string;
+}

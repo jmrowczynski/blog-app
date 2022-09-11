@@ -1,21 +1,17 @@
 import MainTemplate from '../templates/MainTemplate';
 import { Box, Container, Typography } from '@mui/material';
-import { useLoginMutation } from '../services/api/hooks/useLoginMutation';
 import { useForm } from 'react-hook-form';
 import Input from '../components/atoms/Input';
 import Button from '../components/atoms/Button';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import MuiButton from '@mui/material/Button';
-import { forgotPassword } from '../routing/routes';
+import { useForgotPasswordMutation } from '../services/api/hooks/useForgotPasswordMutation';
 
 interface FormInputs {
     email: string;
-    password: string;
 }
 
 const Login = () => {
-    const loginMutation = useLoginMutation();
+    const forgotPasswordMutation = useForgotPasswordMutation();
 
     const {
         control,
@@ -24,16 +20,17 @@ const Login = () => {
     } = useForm<FormInputs>({
         defaultValues: {
             email: '',
-            password: '',
         },
     });
-    const onSubmit = handleSubmit((data) => loginMutation.mutate(data));
+    const onSubmit = handleSubmit((data) =>
+        forgotPasswordMutation.mutate(data)
+    );
 
     return (
         <MainTemplate>
             <Container maxWidth={'sm'}>
                 <Typography component="h1" variant="h4" gutterBottom>
-                    Login
+                    Forgot password
                 </Typography>
                 <Box
                     component="form"
@@ -65,41 +62,15 @@ const Login = () => {
                             },
                         }}
                     />
-                    <Input
-                        name="password"
-                        control={control}
-                        inputProps={{
-                            fullWidth: true,
-                            required: true,
-                            type: 'password',
-                            label: 'Password',
-                            error: !!errors?.password?.message,
-                            helperText: errors?.password?.message,
-                        }}
-                        controllerProps={{
-                            rules: {
-                                required: 'Password is required',
-                            },
-                        }}
-                    />
                     <Button
                         variant="contained"
                         fullWidth
                         size="large"
                         type="submit"
-                        loading={loginMutation.isLoading}
+                        loading={forgotPasswordMutation.isLoading}
                     >
-                        login
+                        send email
                     </Button>
-                    <MuiButton
-                        component={Link}
-                        color="primary"
-                        to={forgotPassword}
-                        size="small"
-                        sx={{ marginTop: 1 }}
-                    >
-                        Forgot password?
-                    </MuiButton>
                 </Box>
             </Container>
         </MainTemplate>
