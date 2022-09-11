@@ -1,6 +1,6 @@
 import React from 'react';
 import MainTemplate from '../templates/MainTemplate';
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Container, Tab, Tabs } from '@mui/material';
 import { NumberParam, useQueryParam } from 'use-query-params';
 import { useAppContext } from '../context/app.context';
 import Users from '../components/pages/MyAccount/Users/Users';
@@ -8,31 +8,7 @@ import Posts from '../components/pages/MyAccount/Posts/Posts';
 import Settings from '../components/pages/MyAccount/Settings/Settings';
 import { Navigate } from 'react-router-dom';
 import { account } from '../routing/routes';
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value?: number | null;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value = 0, index } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+import TabPanel from '../components/molecules/TabPanel/TabPanel';
 
 const Account = () => {
     const [tab, setTab] = useQueryParam('tab', NumberParam);
