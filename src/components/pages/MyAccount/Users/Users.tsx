@@ -5,20 +5,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
-import {
-    Avatar,
-    Box,
-    CircularProgress,
-    IconButton,
-    Typography,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import React from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import RemoveUserDialog from './RemoveUserDialog';
+import UserRow from './UserRow';
+import { IUser } from '../../../../services/types';
 
 const Users = () => {
     const users = useUsersQuery();
     const usersData = users.data?.data;
     const { user: currentUser } = useAppContext();
+    const [open, setOpen] = useState(false);
+    const [clickedUser, setClickedUser] = useState<IUser | undefined>(
+        undefined
+    );
+
+    const handleDialogOpen = (user: IUser) => {
+        setOpen(true);
+        setClickedUser(user);
+    };
+    const handleDialogClose = () => setOpen(false);
 
     const renderUsers =
         !!usersData && usersData.length > 0 ? (
@@ -31,41 +37,12 @@ const Users = () => {
                 </TableHead>
                 <TableBody>
                     {usersData.map((user) => (
-                        <TableRow
+                        <UserRow
                             key={user.id}
-                            sx={{
-                                '&:last-child td, &:last-child th': {
-                                    border: 0,
-                                },
-                            }}
-                            hover
-                        >
-                            <TableCell component="th" scope="row" width={50}>
-                                <Avatar
-                                    alt={user.name}
-                                    src={user.avatar}
-                                    sx={{
-                                        marginLeft: 1,
-                                        width: 30,
-                                        height: 30,
-                                    }}
-                                >
-                                    {user.name[0]}
-                                </Avatar>
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                {user.name}
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="right">
-                                <IconButton
-                                    aria-label="delete"
-                                    disabled={currentUser.id === user.id}
-                                    color="error"
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
+                            user={user}
+                            isDisabled={user.id === currentUser.id}
+                            handleRemoveClick={() => handleDialogOpen(user)}
+                        />
                     ))}
                 </TableBody>
             </Table>
@@ -82,6 +59,11 @@ const Users = () => {
             ) : (
                 renderUsers
             )}
+            <RemoveUserDialog
+                open={open}
+                handleClose={handleDialogClose}
+                user={clickedUser}
+            />
         </div>
     );
 };

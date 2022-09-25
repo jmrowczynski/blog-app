@@ -8,9 +8,10 @@ import {
 } from 'react-router-dom';
 import { useMemo } from 'react';
 import { QueryParamProvider } from 'use-query-params';
-import AppProvider from './context/app.context';
+import { useAppContext } from './context/app.context';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SnackbarProvider } from 'notistack';
+import { NetworkService } from './services/api/axios';
 
 const queryClient = new QueryClient({
     defaultOptions: { queries: { staleTime: 1000 * 10 } }, // 10s
@@ -35,14 +36,14 @@ const RouteAdapter = ({ children }) => {
 };
 
 function App() {
+    NetworkService.setupInterceptors(useAppContext());
+
     return (
         <QueryClientProvider client={queryClient}>
             <Router>
                 <QueryParamProvider ReactRouterRoute={RouteAdapter}>
                     <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-                        <AppProvider>
-                            <Routing />
-                        </AppProvider>
+                        <Routing />
                     </SnackbarProvider>
                 </QueryParamProvider>
             </Router>

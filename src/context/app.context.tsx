@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { useUserLogin } from '../hooks/useUserLogin';
 import { IUserLoginResponse } from '../services/types';
 
-interface IContext {
+export interface IAppContext {
     saveUser: (data: IUserLoginResponse) => void;
     updateUser: (data: IUserLoginResponse['user']) => void;
     removeUser: () => void;
@@ -11,7 +11,7 @@ interface IContext {
     isAdmin: boolean;
 }
 
-const AppContext = createContext<IContext | undefined>(undefined);
+const AppContext = createContext<IAppContext | undefined>(undefined);
 
 const AppProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
     children,
