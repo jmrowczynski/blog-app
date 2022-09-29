@@ -7,9 +7,10 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import RemoveUserDialog from './RemoveUserDialog';
+import DeleteUserDialog from './DeleteUserDialog';
 import UserRow from './UserRow';
 import { IUser } from '../../../../services/types';
+import { useDeleteUserMutation } from '../../../../services/api/hooks/useDeleteUserMutation';
 
 const Users = () => {
     const users = useUsersQuery();
@@ -19,12 +20,19 @@ const Users = () => {
     const [clickedUser, setClickedUser] = useState<IUser | undefined>(
         undefined
     );
+    const { mutate: deleteUser } = useDeleteUserMutation();
 
     const handleDialogOpen = (user: IUser) => {
         setOpen(true);
         setClickedUser(user);
     };
     const handleDialogClose = () => setOpen(false);
+    const handleUserDelete = () => {
+        setOpen(false);
+        if (clickedUser) {
+            deleteUser(clickedUser.id);
+        }
+    };
 
     const renderUsers =
         !!usersData && usersData.length > 0 ? (
@@ -59,9 +67,10 @@ const Users = () => {
             ) : (
                 renderUsers
             )}
-            <RemoveUserDialog
+            <DeleteUserDialog
                 open={open}
-                handleClose={handleDialogClose}
+                onClose={handleDialogClose}
+                onAccept={handleUserDelete}
                 user={clickedUser}
             />
         </div>

@@ -1,5 +1,5 @@
 import { axiosInstance } from '../axios';
-import { IPostsParams } from '../../types';
+import { IPostsParams, IUsersParams } from '../../types';
 
 class UserApi {
     static editMe(body: FormData) {
@@ -12,8 +12,12 @@ class UserApi {
         return axiosInstance.get('/me/posts', { params });
     }
 
-    static getUsers(params?: IPostsParams) {
+    static getUsers(params?: IUsersParams) {
         return axiosInstance.get('/users', { params });
+    }
+
+    static deleteUser(id: number) {
+        return axiosInstance.delete(`/users/${id}`);
     }
 }
 
