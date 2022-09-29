@@ -70,7 +70,7 @@ const EditUserForm = ({ user }: { user: IUser }) => {
                 </Box>
                 <Box sx={{ marginBottom: 2 }}>
                     {!avatar && (
-                        <AvatarImage src={user.avatar} alt={user.name} />
+                        <AvatarImage src={user.avatar_url} alt={user.name} />
                     )}
                     {avatar &&
                         avatar.map((file, index) => {

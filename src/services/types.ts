@@ -7,7 +7,7 @@ export interface IUser {
     email_verified_at?: any;
     created_at: Date;
     updated_at: Date;
-    avatar?: string;
+    avatar_url?: string;
     roles: { id: number; name: Role }[];
 }
 

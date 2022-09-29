@@ -41,7 +41,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                                 My account
                                 <Avatar
                                     alt={user.name}
-                                    src={user?.avatar}
+                                    src={user?.avatar_url}
                                     sx={{
                                         marginLeft: 1,
                                         width: 30,
