@@ -1,11 +1,7 @@
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Routing from './routing';
-import {
-    BrowserRouter as Router,
-    useNavigate,
-    useLocation,
-} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import { QueryParamProvider } from 'use-query-params';
 import { useAppContext } from './context/app.context';
@@ -36,17 +32,19 @@ const RouteAdapter = ({ children }) => {
 };
 
 function App() {
-    NetworkService.setupInterceptors(useAppContext());
+    NetworkService.setupInterceptors({
+        appContext: useAppContext(),
+        navigate: useNavigate(),
+        location: useLocation(),
+    });
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Router>
-                <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-                    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-                        <Routing />
-                    </SnackbarProvider>
-                </QueryParamProvider>
-            </Router>
+            <QueryParamProvider ReactRouterRoute={RouteAdapter}>
+                <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+                    <Routing />
+                </SnackbarProvider>
+            </QueryParamProvider>
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
