@@ -1,32 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import {
-    Box,
-    CircularProgress,
-    Grid,
-    Pagination,
-    PaginationProps,
-    TextField,
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, CircularProgress, Grid, Pagination } from '@mui/material';
 import MainTemplate from '../templates/MainTemplate';
 import { usePostsQuery } from '../services/api/hooks/usePostsQuery';
 import PostCard, { PostCardProps } from '../components/PostCard';
 import { useDebounce } from 'use-debounce';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
-
-const SearchInput: React.FunctionComponent<{
-    value?: string | null;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}> = ({ value, onChange }) => {
-    return (
-        <TextField
-            style={{ marginBottom: '2rem' }}
-            fullWidth
-            value={value}
-            onChange={onChange}
-            label="Search"
-        />
-    );
-};
+import { SearchInput } from '../components/atoms/SearchInput';
 
 const Home = () => {
     const [params, setParams] = useQueryParams({
@@ -40,6 +19,7 @@ const Home = () => {
     const posts = usePostsQuery({ page, search: debounceSearch, per_page: 12 });
 
     useEffect(() => {
+        if (debounceSearch === search) return;
         setParams({ page: undefined, search: debounceSearch });
     }, [debounceSearch]);
 
@@ -76,7 +56,7 @@ const Home = () => {
                             setParams({ page: value });
                             window.scroll(0, 0);
                         }}
-                        page={page as PaginationProps['page']}
+                        page={page || 1}
                         style={{ display: 'flex', justifyContent: 'center' }}
                     />
                 </div>

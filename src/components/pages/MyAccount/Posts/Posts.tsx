@@ -1,11 +1,37 @@
 import { useMyPostsQuery } from '../../../../services/api/hooks/useMyPostsQuery';
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import {
+    Box,
+    CircularProgress,
+    Grid,
+    Pagination,
+    Typography,
+} from '@mui/material';
 import PostCard, { PostCardProps } from '../../../PostCard';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
+import { useDebounce } from 'use-debounce';
+import { SearchInput } from '../../../atoms/SearchInput';
 
 const Posts = () => {
-    const posts = useMyPostsQuery();
+    const [params, setParams] = useQueryParams({
+        search: StringParam,
+        page: NumberParam,
+    });
+    const { search, page } = params;
+    const [searchState, setSearchState] = useState(search);
+    const [debounceSearch] = useDebounce(searchState, 500);
+
+    const posts = useMyPostsQuery({
+        page,
+        search: debounceSearch,
+        per_page: 12,
+    });
     const postsData = posts.data?.data?.data;
+
+    useEffect(() => {
+        if (debounceSearch === search) return;
+        setParams({ page: 1, search: debounceSearch });
+    }, [debounceSearch]);
 
     const renderPosts =
         postsData?.length > 0 ? (
@@ -26,6 +52,10 @@ const Posts = () => {
 
     return (
         <div>
+            <SearchInput
+                value={searchState}
+                onChange={(e) => setSearchState(e.target.value)}
+            />
             {posts.isLoading ? (
                 <Box style={{ display: 'flex', justifyContent: 'center' }}>
                     <CircularProgress />
@@ -33,6 +63,15 @@ const Posts = () => {
             ) : (
                 renderPosts
             )}
+            <Pagination
+                count={posts?.data?.data?.last_page}
+                onChange={(event, value) => {
+                    setParams({ page: value });
+                    window.scroll(0, 0);
+                }}
+                page={page || 1}
+                style={{ display: 'flex', justifyContent: 'center' }}
+            />
         </div>
     );
 };
