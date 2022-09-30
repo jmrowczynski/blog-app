@@ -31,7 +31,7 @@ const Posts = () => {
     useEffect(() => {
         if (debounceSearch === search) return;
         setParams({ page: 1, search: debounceSearch });
-    }, [debounceSearch]);
+    }, [debounceSearch, search, setParams]);
 
     const renderPosts =
         postsData?.length > 0 ? (

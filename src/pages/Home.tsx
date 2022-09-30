@@ -21,7 +21,7 @@ const Home = () => {
     useEffect(() => {
         if (debounceSearch === search) return;
         setParams({ page: undefined, search: debounceSearch });
-    }, [debounceSearch]);
+    }, [debounceSearch, search, setParams]);
 
     return (
         <MainTemplate>
