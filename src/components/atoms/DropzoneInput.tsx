@@ -35,9 +35,12 @@ export const DropzoneField = ({
 const DropzoneInput: React.FunctionComponent<DropzoneInputProps> = ({
     onChange,
 }) => {
-    const onDrop = useCallback((acceptedFiles: any) => {
-        onChange(acceptedFiles);
-    }, []);
+    const onDrop = useCallback(
+        (acceptedFiles: any) => {
+            onChange(acceptedFiles);
+        },
+        [onChange]
+    );
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         maxFiles: 1,

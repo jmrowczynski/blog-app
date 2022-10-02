@@ -11,6 +11,9 @@ import React, { useEffect, useState } from 'react';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { useDebounce } from 'use-debounce';
 import { SearchInput } from '../../../atoms/SearchInput';
+import { Link } from 'react-router-dom';
+import { createPost } from '../../../../routing/routes';
+import MuiButton from '@mui/material/Button';
 
 const Posts = () => {
     const [params, setParams] = useQueryParams({
@@ -52,6 +55,15 @@ const Posts = () => {
 
     return (
         <div>
+            <MuiButton
+                component={Link}
+                color="primary"
+                to={createPost}
+                size="small"
+                sx={{ marginBottom: 1 }}
+            >
+                Create new post
+            </MuiButton>
             <SearchInput
                 value={searchState}
                 onChange={(e) => setSearchState(e.target.value)}

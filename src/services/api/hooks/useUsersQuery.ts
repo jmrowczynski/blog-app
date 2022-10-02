@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { IPostsParams, IUser, IUsersParams } from '../../types';
+import { IUser, IUsersParams } from '../../types';
 import UserApi from '../connections/UserApi';
 
 export const queryKey = 'users';
