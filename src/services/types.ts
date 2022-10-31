@@ -48,3 +48,8 @@ export interface IUserResetPasswordRequest {
     password_confirmation: string;
     token: string;
 }
+
+export interface ICategory {
+    id: number;
+    name: string;
+}
