@@ -53,3 +53,9 @@ export interface ICategory {
     id: number;
     name: string;
 }
+
+export interface ICreatePostRequest {
+    category_id?: number;
+    title: string;
+    content: string;
+}

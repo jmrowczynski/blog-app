@@ -9,6 +9,7 @@ import Select from '../components/atoms/Select';
 import { useCategoriesQuery } from '../services/api/hooks/useCategoriesQuery';
 import { Box } from '@mui/material';
 import Button from '../components/atoms/Button';
+import { useCreatePostMutation } from '../services/api/hooks/useCreatePostMutation';
 
 interface FormInputs {
     title: string;
@@ -19,6 +20,7 @@ interface FormInputs {
 const CreatePost = () => {
     const [content, setContent] = useState('');
     const { data: categories, isLoading } = useCategoriesQuery();
+    const createPostMutation = useCreatePostMutation();
 
     const {
         control,
@@ -32,11 +34,7 @@ const CreatePost = () => {
         },
     });
 
-    console.log(errors);
-
-    const onSubmit = handleSubmit((data) => {
-        console.log(data);
-    });
+    const onSubmit = handleSubmit((data) => createPostMutation.mutate(data));
 
     return (
         <MainTemplate>
