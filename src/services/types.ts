@@ -59,3 +59,18 @@ export interface ICreatePostRequest {
     title: string;
     content: string;
 }
+
+export interface IPost {
+    id: number;
+    title: string;
+    content: string;
+    slug: string;
+    created_at: Date;
+    updated_at: Date;
+    user: Omit<IUser, 'updated_at' | 'created_at' | 'email_verified_at'>;
+    category: ICategory;
+}
+
+export interface ISinglePostRequest {
+    data: IPost;
+}
