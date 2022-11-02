@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+    Box,
     Button,
     Card,
     CardActions,
@@ -9,18 +10,25 @@ import {
 import { Link } from 'react-router-dom';
 import { posts } from '../routing/routes';
 import DOMPurify from 'dompurify';
+import { useAppContext } from '../context/app.context';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { IPost } from '../services/types';
 
 export interface PostCardProps {
     id?: number;
     title: string;
     content: string;
     slug: string;
+    user: IPost['user'];
 }
 
 const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
-    const { title, content, slug } = props;
+    const { title, content, slug, user } = props;
     const contentRef = useRef<HTMLElement>(null);
     const [excerpt, setExcerpt] = useState(content);
+    const { isAdmin, user: currentUser } = useAppContext();
 
     useEffect(() => {
         if (contentRef?.current) {
@@ -50,6 +58,24 @@ const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
                 <Button size="small" component={Link} to={`${posts}/${slug}`}>
                     Read More
                 </Button>
+                {(isAdmin || currentUser?.id === user.id) && (
+                    <Box sx={{ marginLeft: 'auto' }}>
+                        <IconButton
+                            aria-label="edit"
+                            color="info"
+                            onClick={() => {}}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            aria-label="delete"
+                            color="error"
+                            onClick={() => {}}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Box>
+                )}
             </CardActions>
         </Card>
     );

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Grid, Pagination } from '@mui/material';
 import MainTemplate from '../templates/MainTemplate';
 import { usePostsQuery } from '../services/api/hooks/usePostsQuery';
-import PostCard, { PostCardProps } from '../components/PostCard';
+import PostCard from '../components/PostCard';
 import { useDebounce } from 'use-debounce';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { SearchInput } from '../components/atoms/SearchInput';
+import { IPost } from '../services/types';
 
 const Home = () => {
     const [params, setParams] = useQueryParams({
@@ -40,12 +41,13 @@ const Home = () => {
                         spacing={2}
                         style={{ marginBottom: '3rem' }}
                     >
-                        {posts.data?.data?.data.map((post: PostCardProps) => (
+                        {posts.data?.data?.data.map((post: IPost) => (
                             <Grid key={post.id} item xs={12} sm={6} md={4}>
                                 <PostCard
                                     slug={post.slug}
                                     title={post.title}
                                     content={post.content}
+                                    user={post.user}
                                 />
                             </Grid>
                         ))}

@@ -6,7 +6,7 @@ import {
     Pagination,
     Typography,
 } from '@mui/material';
-import PostCard, { PostCardProps } from '../../../PostCard';
+import PostCard from '../../../PostCard';
 import React, { useEffect, useState } from 'react';
 import { NumberParam, StringParam, useQueryParams } from 'use-query-params';
 import { useDebounce } from 'use-debounce';
@@ -14,6 +14,7 @@ import { SearchInput } from '../../../atoms/SearchInput';
 import { Link } from 'react-router-dom';
 import { createPost } from '../../../../routing/routes';
 import MuiButton from '@mui/material/Button';
+import { IPost } from '../../../../services/types';
 
 const Posts = () => {
     const [params, setParams] = useQueryParams({
@@ -39,12 +40,13 @@ const Posts = () => {
     const renderPosts =
         postsData?.length > 0 ? (
             <Grid container spacing={2} style={{ marginBottom: '3rem' }}>
-                {postsData.map((post: PostCardProps) => (
+                {postsData.map((post: IPost) => (
                     <Grid key={post.id} item xs={12} sm={6} md={4}>
                         <PostCard
                             slug={post.slug}
                             title={post.title}
                             content={post.content}
+                            user={post.user}
                         />
                     </Grid>
                 ))}
