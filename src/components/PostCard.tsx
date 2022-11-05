@@ -36,7 +36,14 @@ const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
     }, [content, contentRef]);
 
     return (
-        <Card>
+        <Card
+            sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}
+        >
             <CardContent>
                 <Typography variant="h5" component="h2">
                     {title}
