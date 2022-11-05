@@ -8,7 +8,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { posts } from '../routing/routes';
+import { editPost, posts } from '../routing/routes';
 import DOMPurify from 'dompurify';
 import { useAppContext } from '../context/app.context';
 import { IconButton } from '@mui/material';
@@ -60,13 +60,11 @@ const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
                 </Button>
                 {(isAdmin || currentUser?.id === user.id) && (
                     <Box sx={{ marginLeft: 'auto' }}>
-                        <IconButton
-                            aria-label="edit"
-                            color="info"
-                            onClick={() => {}}
-                        >
-                            <EditIcon />
-                        </IconButton>
+                        <Link to={editPost.replace(':slug', slug)}>
+                            <IconButton aria-label="edit" color="info">
+                                <EditIcon />
+                            </IconButton>
+                        </Link>
                         <IconButton
                             aria-label="delete"
                             color="error"

@@ -60,6 +60,8 @@ export interface ICreatePostRequest {
     content: string;
 }
 
+export type IEditPostRequest = ICreatePostRequest;
+
 export interface IPost {
     id: number;
     title: string;

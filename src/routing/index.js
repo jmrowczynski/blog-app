@@ -9,6 +9,7 @@ import {
     forgotPassword,
     resetPassword,
     createPost,
+    editPost,
 } from './routes';
 import SinglePost from '../pages/SinglePost';
 import Login from '../pages/Login';
@@ -17,6 +18,7 @@ import Account from '../pages/Account';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import CreatePost from '../pages/CreatePost';
+import EditPost from '../pages/EditPost';
 
 const Routing = () => {
     return (
@@ -44,6 +46,14 @@ const Routing = () => {
                 element={
                     <Protect rules={['logged_in']}>
                         <CreatePost />
+                    </Protect>
+                }
+            />
+            <Route
+                path={editPost}
+                element={
+                    <Protect rules={['logged_in']}>
+                        <EditPost />
                     </Protect>
                 }
             />

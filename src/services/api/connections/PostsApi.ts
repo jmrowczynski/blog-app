@@ -1,6 +1,7 @@
 import { axiosInstance } from '../axios';
 import {
     ICreatePostRequest,
+    IEditPostRequest,
     IPostsParams,
     ISinglePostRequest,
 } from '../../types';
@@ -14,6 +15,9 @@ class PostsApi {
     }
     static create(body: ICreatePostRequest) {
         return axiosInstance.post('/posts/store', body);
+    }
+    static update(body: IEditPostRequest, slug: string) {
+        return axiosInstance.put(`/posts/${slug}`, body);
     }
 }
 

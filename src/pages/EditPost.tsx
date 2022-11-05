@@ -3,12 +3,12 @@ import MainTemplate from '../templates/MainTemplate';
 import 'react-quill/dist/quill.snow.css';
 import CreateEditPostForm from '../components/organisms/CreateEditPostForm/CreateEditPostForm';
 
-const CreatePost = () => {
+const EditPost = () => {
     return (
         <MainTemplate>
-            <CreateEditPostForm />
+            <CreateEditPostForm type="edit" />
         </MainTemplate>
     );
 };
 
-export default CreatePost;
+export default EditPost;

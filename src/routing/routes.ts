@@ -6,3 +6,4 @@ export const account = '/account';
 export const forgotPassword = '/forgot-password';
 export const resetPassword = '/reset-password';
 export const createPost = '/account/posts/create';
+export const editPost = '/account/posts/edit/:slug';
