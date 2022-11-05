@@ -47,6 +47,7 @@ const Posts = () => {
                             title={post.title}
                             content={post.content}
                             user={post.user}
+                            category={post.category}
                         />
                     </Grid>
                 ))}
