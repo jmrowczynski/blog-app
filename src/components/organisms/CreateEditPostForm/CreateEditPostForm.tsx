@@ -9,10 +9,12 @@ import { useCategoriesQuery } from '../../../services/api/hooks/useCategoriesQue
 import { Box, CircularProgress, Typography } from '@mui/material';
 import Button from '../../../components/atoms/Button';
 import { useCreatePostMutation } from '../../../services/api/hooks/useCreatePostMutation';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSinglePostQuery } from '../../../services/api/hooks/useSinglePostQuery';
 import { useEditPostMutation } from '../../../services/api/hooks/useEditPostMutation';
 import { ICreatePostRequest } from '../../../services/types';
+import { singlePost } from '../../../routing/routes';
+import MuiButton from '@mui/material/Button';
 
 // TODO: check types
 type FormInputs = ICreatePostRequest;
@@ -78,10 +80,23 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
 
     return (
         <Box>
-            <Typography variant="h4" component="p" sx={{ marginBottom: 5 }}>
-                {type === 'create' && 'Create post'}
-                {type === 'edit' && `Edit ${post?.data.title}`}
-            </Typography>
+            <Box sx={{ marginBottom: 5 }}>
+                <Typography variant="h4" component="p">
+                    {type === 'create' && 'Create post'}
+                    {type === 'edit' && `Edit ${post?.data.title}`}
+                </Typography>
+                {type === 'edit' && !!slug && (
+                    <MuiButton
+                        component={Link}
+                        color="primary"
+                        to={singlePost.replace(':slug', slug)}
+                        size="small"
+                        sx={{ marginTop: 1 }}
+                    >
+                        Show post
+                    </MuiButton>
+                )}
+            </Box>
             <Box
                 component="form"
                 noValidate
