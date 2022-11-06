@@ -40,7 +40,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                             >
                                 My account
                                 <Avatar
-                                    alt={user.name}
+                                    alt={user?.name}
                                     src={user?.avatar_url}
                                     sx={{
                                         marginLeft: 1,
@@ -48,7 +48,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                                         height: 30,
                                     }}
                                 >
-                                    {user.name[0]}
+                                    {user?.name[0]}
                                 </Avatar>
                             </Button>
                             <Button color="inherit" onClick={handleLogout}>

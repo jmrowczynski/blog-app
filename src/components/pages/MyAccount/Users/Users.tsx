@@ -48,7 +48,7 @@ const Users = () => {
                         <UserRow
                             key={user.id}
                             user={user}
-                            isDisabled={user.id === currentUser.id}
+                            isDisabled={user.id === currentUser?.id}
                             handleRemoveClick={() => handleDialogOpen(user)}
                         />
                     ))}

@@ -4,6 +4,10 @@ import { useAppContext } from '../../../../context/app.context';
 const Settings = () => {
     const { user } = useAppContext();
 
+    if (!user) {
+        return null;
+    }
+
     return <EditUserForm user={user} />;
 };
 

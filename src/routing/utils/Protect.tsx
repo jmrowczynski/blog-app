@@ -15,7 +15,7 @@ const Protect: React.FunctionComponent<{
     const { token, user } = useAppContext();
 
     if (roles.length) {
-        const userRolesNames = getUserRolesNames(user.roles);
+        const userRolesNames = user?.roles ? getUserRolesNames(user.roles) : [];
         const isValid = roles.every((role) => userRolesNames.includes(role));
 
         if (!isValid) {

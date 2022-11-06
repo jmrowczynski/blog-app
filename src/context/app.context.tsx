@@ -6,8 +6,8 @@ export interface IAppContext {
     saveUser: (data: IUserLoginResponse) => void;
     updateUser: (data: IUserLoginResponse['user']) => void;
     removeUser: () => void;
-    user: IUserLoginResponse['user'];
-    token: IUserLoginResponse['token'];
+    user?: IUserLoginResponse['user'];
+    token?: IUserLoginResponse['token'];
     isAdmin: boolean;
 }
 

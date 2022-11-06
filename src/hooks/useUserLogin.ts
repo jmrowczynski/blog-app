@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { axiosInstance } from '../services/api/axios';
-import { IUserLoginResponse } from '../services/types';
+import { IUser, IUserLoginResponse } from '../services/types';
 import { isUserAdmin } from '../utils/isUserAdmin';
 
 const getUser = () => {
@@ -9,7 +9,7 @@ const getUser = () => {
         return JSON.parse(storageUser);
     }
 
-    return null;
+    return undefined;
 };
 
 const getToken = () => {
@@ -18,12 +18,12 @@ const getToken = () => {
         return JSON.parse(storageToken);
     }
 
-    return null;
+    return undefined;
 };
 
 export const useUserLogin = () => {
-    const [user, setUser] = useState(getUser());
-    const [token, setToken] = useState(getToken());
+    const [user, setUser] = useState<IUser | undefined>(getUser());
+    const [token, setToken] = useState<string | undefined>(getToken());
 
     const isAdmin = useMemo(() => {
         if (user?.roles) {
