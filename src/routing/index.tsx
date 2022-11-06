@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import {
     home,
@@ -10,6 +10,7 @@ import {
     resetPassword,
     createPost,
     editPost,
+    register,
 } from './routes';
 import SinglePost from '../pages/SinglePost';
 import Login from '../pages/Login';
@@ -20,7 +21,7 @@ import ResetPassword from '../pages/ResetPassword';
 import CreatePost from '../pages/CreatePost';
 import EditPost from '../pages/EditPost';
 import { useAppContext } from '../context/app.context';
-import { useSinglePostQuery } from '../services/api/hooks/useSinglePostQuery';
+import Register from '../pages/Register';
 
 const Routing = () => {
     const { token, user } = useAppContext();
@@ -35,6 +36,14 @@ const Routing = () => {
                 element={
                     <Protect rules={[!isLoggedIn]}>
                         <Login />
+                    </Protect>
+                }
+            />
+            <Route
+                path={register}
+                element={
+                    <Protect rules={[!isLoggedIn]}>
+                        <Register />
                     </Protect>
                 }
             />

@@ -69,7 +69,7 @@ const EditUserForm = ({ user }: { user: IUser }) => {
                     <DropzoneField control={control} name="avatar" />
                 </Box>
                 <Box sx={{ marginBottom: 2 }}>
-                    {!avatar && (
+                    {!avatar && user.avatar_url && (
                         <AvatarImage src={user.avatar_url} alt={user.name} />
                     )}
                     {avatar &&

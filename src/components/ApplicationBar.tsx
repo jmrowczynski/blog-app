@@ -1,6 +1,6 @@
 import { AppBar, Avatar, Box, Button, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { login, account, home } from '../routing/routes';
+import { login, account, home, register } from '../routing/routes';
 import { useAppContext } from '../context/app.context';
 import React from 'react';
 import { useLogoutMutation } from '../services/api/hooks/useLogoutMutation';
@@ -28,7 +28,13 @@ const ApplicationBar: React.FunctionComponent = () => {
                             >
                                 Login
                             </Button>
-                            <Button color="inherit">Register</Button>
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                to={register}
+                            >
+                                Register
+                            </Button>
                         </>
                     ) : (
                         <>

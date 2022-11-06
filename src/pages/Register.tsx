@@ -1,35 +1,34 @@
 import MainTemplate from '../templates/MainTemplate';
 import { Box, Container, Typography } from '@mui/material';
-import { useLoginMutation } from '../services/api/hooks/useLoginMutation';
 import { useForm } from 'react-hook-form';
 import Input from '../components/atoms/Input';
 import Button from '../components/atoms/Button';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import MuiButton from '@mui/material/Button';
-import { forgotPassword } from '../routing/routes';
-import { IUserLoginRequest } from '../services/types';
+import { IUserRegisterRequest } from '../services/types';
+import { useRegisterMutation } from '../services/api/hooks/useRegisterMutation';
 
-const Login = () => {
-    const loginMutation = useLoginMutation();
+const Register = () => {
+    const registerMutation = useRegisterMutation();
 
     const {
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm<IUserLoginRequest>({
+    } = useForm<IUserRegisterRequest>({
         defaultValues: {
             email: '',
+            name: '',
             password: '',
+            password_confirmation: '',
         },
     });
-    const onSubmit = handleSubmit((data) => loginMutation.mutate(data));
+    const onSubmit = handleSubmit((data) => registerMutation.mutate(data));
 
     return (
         <MainTemplate>
             <Container maxWidth={'sm'}>
                 <Typography component="h1" variant="h4" gutterBottom>
-                    Login
+                    Register
                 </Typography>
                 <Box
                     component="form"
@@ -62,6 +61,23 @@ const Login = () => {
                         }}
                     />
                     <Input
+                        name="name"
+                        control={control}
+                        inputProps={{
+                            fullWidth: true,
+                            required: true,
+                            type: 'text',
+                            label: 'Name',
+                            error: !!errors?.name?.message,
+                            helperText: errors?.name?.message,
+                        }}
+                        controllerProps={{
+                            rules: {
+                                required: 'Name is required',
+                            },
+                        }}
+                    />
+                    <Input
                         name="password"
                         control={control}
                         inputProps={{
@@ -78,29 +94,37 @@ const Login = () => {
                             },
                         }}
                     />
+                    <Input
+                        name="password_confirmation"
+                        control={control}
+                        inputProps={{
+                            fullWidth: true,
+                            required: true,
+                            type: 'password',
+                            label: 'Password confirmation',
+                            error: !!errors?.password_confirmation?.message,
+                            helperText: errors?.password_confirmation?.message,
+                        }}
+                        controllerProps={{
+                            rules: {
+                                required: 'Password is required',
+                            },
+                        }}
+                    />
                     <Button
                         variant="contained"
                         fullWidth
                         size="large"
                         type="submit"
-                        loading={loginMutation.isLoading}
-                        disabled={loginMutation.isLoading}
+                        loading={registerMutation.isLoading}
+                        disabled={registerMutation.isLoading}
                     >
-                        login
+                        register
                     </Button>
-                    <MuiButton
-                        component={Link}
-                        color="primary"
-                        to={forgotPassword}
-                        size="small"
-                        sx={{ marginTop: 1 }}
-                    >
-                        Forgot password?
-                    </MuiButton>
                 </Box>
             </Container>
         </MainTemplate>
     );
 };
 
-export default Login;
+export default Register;

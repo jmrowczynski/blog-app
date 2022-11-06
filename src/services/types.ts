@@ -21,6 +21,13 @@ export interface IUserLoginRequest {
     password: string;
 }
 
+export interface IUserRegisterRequest {
+    email: string;
+    name: string;
+    password: string;
+    password_confirmation: string;
+}
+
 export interface IPostsParams {
     per_page?: number;
     page?: number | null;

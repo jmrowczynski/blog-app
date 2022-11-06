@@ -10,6 +10,10 @@ class AuthApi {
         return axiosInstance.post('/login', body);
     }
 
+    static register(body: IUserLoginRequest) {
+        return axiosInstance.post('/register', body);
+    }
+
     static cookie() {
         return axiosInstance.get('/sanctum/csrf-cookie', {
             baseURL: process.env.REACT_APP_API_URL?.replace('/api', ''),
