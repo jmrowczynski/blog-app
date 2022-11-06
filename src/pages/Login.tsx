@@ -88,6 +88,7 @@ const Login = () => {
                         size="large"
                         type="submit"
                         loading={loginMutation.isLoading}
+                        disabled={loginMutation.isLoading}
                     >
                         login
                     </Button>

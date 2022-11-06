@@ -89,6 +89,7 @@ const EditUserForm = ({ user }: { user: IUser }) => {
                     size="large"
                     type="submit"
                     loading={editUserMutation.isLoading}
+                    disabled={editUserMutation.isLoading}
                 >
                     save
                 </Button>

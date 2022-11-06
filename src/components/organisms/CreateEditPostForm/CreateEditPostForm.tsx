@@ -163,6 +163,10 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
                         editPostMutation.isLoading ||
                         createPostMutation.isLoading
                     }
+                    disabled={
+                        editPostMutation.isLoading ||
+                        createPostMutation.isLoading
+                    }
                 >
                     {type === 'create' && 'Create'}
                     {type === 'edit' && 'Edit'}
