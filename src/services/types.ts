@@ -58,6 +58,7 @@ export interface ICreatePostRequest {
     category_id?: number;
     title: string;
     content: string;
+    excerpt?: string;
 }
 
 export type IEditPostRequest = ICreatePostRequest;

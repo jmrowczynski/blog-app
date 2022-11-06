@@ -54,6 +54,7 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
             title: '',
             content: '',
             category_id: undefined,
+            excerpt: undefined,
         },
     });
 
@@ -63,6 +64,7 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
                 title: post?.data.title,
                 content: post?.data.content,
                 category_id: post?.data.category?.id,
+                excerpt: post?.data.excerpt,
             });
             setContent(post?.data.content);
         }
@@ -123,7 +125,17 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
                         },
                     }}
                 />
-                {/*TODO: add excerpt input*/}
+                <Input
+                    name="excerpt"
+                    control={control}
+                    inputProps={{
+                        fullWidth: true,
+                        label: 'Excerpt',
+                        error: !!errors?.excerpt?.message,
+                        helperText: errors?.excerpt?.message,
+                        sx: { marginBottom: 2 },
+                    }}
+                />
                 <Select
                     name="category_id"
                     control={control}
