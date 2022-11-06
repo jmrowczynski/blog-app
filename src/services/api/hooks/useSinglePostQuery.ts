@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from 'react-query';
 import PostsApi from '../connections/PostsApi';
 import { ISinglePostRequest } from '../../types';
 
-export const queryKey = 'posts';
+export const queryKey = 'singlePost';
 
 export const useSinglePostQuery = (
     slug: string,

@@ -3,7 +3,9 @@ import { IEditPostRequest } from '../../types';
 import { useSnackbar } from 'notistack';
 import { AxiosError } from 'axios';
 import PostsApi from '../connections/PostsApi';
-import { queryKey } from './useSinglePostQuery';
+import { queryKey as singlePostKey } from './useSinglePostQuery';
+import { queryKey as postsKey } from './usePostsQuery';
+import { queryKey as myPostsKey } from './useMyPostsQuery';
 
 export const useEditPostMutation = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -14,8 +16,10 @@ export const useEditPostMutation = () => {
             PostsApi.update(body, slug),
         {
             onSuccess(_, data) {
+                queryClient.invalidateQueries([singlePostKey, data.slug]);
+                queryClient.invalidateQueries(postsKey);
+                queryClient.invalidateQueries(myPostsKey);
                 enqueueSnackbar('Post edited!', { variant: 'success' });
-                queryClient.invalidateQueries([queryKey, data.slug]);
             },
 
             onError(error: AxiosError<{ message?: string }>) {
