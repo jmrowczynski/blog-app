@@ -1,7 +1,8 @@
 import { useSnackbar } from 'notistack';
 import { useMutation, useQueryClient } from 'react-query';
 import { AxiosError } from 'axios';
-import { queryKey } from './usePostsQuery';
+import { queryKey as postsKey } from './usePostsQuery';
+import { queryKey as myPostsKey } from './useMyPostsQuery';
 import PostsApi from '../connections/PostsApi';
 
 export const useDeletePostMutation = () => {
@@ -10,7 +11,8 @@ export const useDeletePostMutation = () => {
 
     return useMutation((slug: string) => PostsApi.delete(slug), {
         async onSuccess() {
-            await queryClient.invalidateQueries([queryKey]);
+            await queryClient.invalidateQueries([postsKey]);
+            await queryClient.invalidateQueries([myPostsKey]);
             enqueueSnackbar('Post deleted successfully!', {
                 variant: 'success',
             });

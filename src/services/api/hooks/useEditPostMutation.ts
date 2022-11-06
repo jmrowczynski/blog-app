@@ -17,8 +17,8 @@ export const useEditPostMutation = () => {
         {
             async onSuccess(_, data) {
                 await queryClient.invalidateQueries([singlePostKey, data.slug]);
-                await queryClient.invalidateQueries(postsKey);
-                await queryClient.invalidateQueries(myPostsKey);
+                await queryClient.invalidateQueries([postsKey]);
+                await queryClient.invalidateQueries([myPostsKey]);
                 enqueueSnackbar('Post edited!', { variant: 'success' });
             },
 
