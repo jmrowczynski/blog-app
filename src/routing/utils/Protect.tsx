@@ -1,41 +1,37 @@
 import React from 'react';
-import { useAppContext } from '../../context/app.context';
 import { Navigate } from 'react-router-dom';
-import { home } from '../routes';
-import { getUserRolesNames } from '../../utils/getUserRolesNames';
-import { Role } from '../../services/types';
+import { CircularProgress } from '@mui/material';
+import MainTemplate from '../../templates/MainTemplate';
+import { useCanEditPost } from '../../hooks/useCanEditPost';
 
-export type Rule = 'logged_in' | 'not_logged_in';
+export type IPermissions = 'edit_post';
 
 const Protect: React.FunctionComponent<{
     children?: React.ReactNode;
-    rules?: Rule[];
-    roles?: Role[];
-}> = ({ children, rules = [], roles = [] }) => {
-    const { token, user } = useAppContext();
+    rules?: boolean[];
+    permissions?: IPermissions[];
+}> = ({ children, rules = [], permissions = [] }) => {
+    const { canEdit, isLoading } = useCanEditPost({
+        enable: permissions.includes('edit_post'),
+    });
+    const isValidRules = rules.every((rule) => rule);
+    const isValidPermissions = [canEdit]
+        .filter((permission) => permission !== undefined)
+        .every((permission) => permission);
 
-    if (roles.length) {
-        const userRolesNames = user?.roles ? getUserRolesNames(user.roles) : [];
-        const isValid = roles.every((role) => userRolesNames.includes(role));
-
-        if (!isValid) {
-            return <Navigate replace to={home} />;
-        }
+    if (isLoading) {
+        return (
+            <MainTemplate>
+                <CircularProgress />
+            </MainTemplate>
+        );
     }
 
-    if (rules.includes('logged_in') && !token) {
-        return <Navigate replace to={home} />;
+    if (isValidRules && isValidPermissions) {
+        return <>{children}</>;
     }
 
-    if (rules.includes('not_logged_in') && token) {
-        return <Navigate replace to={home} />;
-    }
-
-    if (!rules.length && !token) {
-        return <Navigate replace to={home} />;
-    }
-
-    return <>{children}</>;
+    return <Navigate to="/" />;
 };
 
 export default Protect;

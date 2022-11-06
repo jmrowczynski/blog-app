@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import Home from '../pages/Home';
 import {
     home,
@@ -19,16 +19,21 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import CreatePost from '../pages/CreatePost';
 import EditPost from '../pages/EditPost';
+import { useAppContext } from '../context/app.context';
+import { useSinglePostQuery } from '../services/api/hooks/useSinglePostQuery';
 
 const Routing = () => {
+    const { token, user } = useAppContext();
+    const isLoggedIn = !!token && !!user;
+
     return (
         <Routes>
-            <Route index path={home} element={<Home />} />
+            <Route index={false} path={home} element={<Home />} />
             <Route path={singlePost} element={<SinglePost />} />
             <Route
                 path={login}
                 element={
-                    <Protect rules={['not_logged_in']}>
+                    <Protect rules={[!isLoggedIn]}>
                         <Login />
                     </Protect>
                 }
@@ -36,7 +41,7 @@ const Routing = () => {
             <Route
                 path={account}
                 element={
-                    <Protect rules={['logged_in']}>
+                    <Protect rules={[isLoggedIn]}>
                         <Account />
                     </Protect>
                 }
@@ -44,7 +49,7 @@ const Routing = () => {
             <Route
                 path={createPost}
                 element={
-                    <Protect rules={['logged_in']}>
+                    <Protect rules={[isLoggedIn]}>
                         <CreatePost />
                     </Protect>
                 }
@@ -52,7 +57,7 @@ const Routing = () => {
             <Route
                 path={editPost}
                 element={
-                    <Protect rules={['logged_in']}>
+                    <Protect rules={[isLoggedIn]} permissions={['edit_post']}>
                         <EditPost />
                     </Protect>
                 }
@@ -60,7 +65,7 @@ const Routing = () => {
             <Route
                 path={forgotPassword}
                 element={
-                    <Protect rules={['not_logged_in']}>
+                    <Protect rules={[!isLoggedIn]}>
                         <ForgotPassword />
                     </Protect>
                 }
@@ -68,7 +73,7 @@ const Routing = () => {
             <Route
                 path={resetPassword}
                 element={
-                    <Protect rules={['not_logged_in']}>
+                    <Protect rules={[!isLoggedIn]}>
                         <ResetPassword />
                     </Protect>
                 }
