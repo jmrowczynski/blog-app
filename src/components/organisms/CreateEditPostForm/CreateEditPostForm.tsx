@@ -123,6 +123,7 @@ const CreateEditPostForm: React.FunctionComponent<CreateEditPostFormProps> = (
                         },
                     }}
                 />
+                {/*TODO: add excerpt input*/}
                 <Select
                     name="category_id"
                     control={control}
