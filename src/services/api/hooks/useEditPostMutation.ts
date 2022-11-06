@@ -15,10 +15,10 @@ export const useEditPostMutation = () => {
         ({ body, slug }: { body: IEditPostRequest; slug: string }) =>
             PostsApi.update(body, slug),
         {
-            onSuccess(_, data) {
-                queryClient.invalidateQueries([singlePostKey, data.slug]);
-                queryClient.invalidateQueries(postsKey);
-                queryClient.invalidateQueries(myPostsKey);
+            async onSuccess(_, data) {
+                await queryClient.invalidateQueries([singlePostKey, data.slug]);
+                await queryClient.invalidateQueries(postsKey);
+                await queryClient.invalidateQueries(myPostsKey);
                 enqueueSnackbar('Post edited!', { variant: 'success' });
             },
 

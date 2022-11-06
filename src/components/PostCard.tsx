@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Button,
@@ -15,6 +15,8 @@ import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IPost } from '../services/types';
+import Dialog from './organisms/Dialog/Dialog';
+import { useDeletePostMutation } from '../services/api/hooks/useDeletePostMutation';
 
 export type PostCardProps = Pick<
     IPost,
@@ -24,6 +26,18 @@ export type PostCardProps = Pick<
 const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
     const { title, slug, user, category, excerpt } = props;
     const { isAdmin, user: currentUser } = useAppContext();
+    const [open, setOpen] = useState(false);
+    const { mutate: deletePost, isLoading } = useDeletePostMutation();
+
+    const handleDialogClose = () => setOpen(false);
+    const handleDialogOpen = () => setOpen(true);
+    const handlePostDelete = () => {
+        deletePost(slug, {
+            onSuccess() {
+                setOpen(false);
+            },
+        });
+    };
 
     return (
         <Card
@@ -69,13 +83,23 @@ const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
                         <IconButton
                             aria-label="delete"
                             color="error"
-                            onClick={() => {}}
+                            onClick={handleDialogOpen}
                         >
                             <DeleteIcon />
                         </IconButton>
                     </Box>
                 )}
             </CardActions>
+            {open && (
+                <Dialog
+                    open={open}
+                    onClose={handleDialogClose}
+                    onAccept={handlePostDelete}
+                    title={title}
+                    content={`Are you sure you want to delete ${title}?`}
+                    isActionLoading={isLoading}
+                />
+            )}
         </Card>
     );
 };

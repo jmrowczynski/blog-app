@@ -1,17 +1,17 @@
 import { useSnackbar } from 'notistack';
 import { useMutation, useQueryClient } from 'react-query';
 import { AxiosError } from 'axios';
-import UserApi from '../connections/UserApi';
-import { queryKey } from './useUsersQuery';
+import { queryKey } from './usePostsQuery';
+import PostsApi from '../connections/PostsApi';
 
-export const useDeleteUserMutation = () => {
+export const useDeletePostMutation = () => {
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
 
-    return useMutation((id: number) => UserApi.deleteUser(id), {
+    return useMutation((slug: string) => PostsApi.delete(slug), {
         async onSuccess() {
             await queryClient.invalidateQueries([queryKey]);
-            enqueueSnackbar('User deleted successfully!', {
+            enqueueSnackbar('Post deleted successfully!', {
                 variant: 'success',
             });
         },

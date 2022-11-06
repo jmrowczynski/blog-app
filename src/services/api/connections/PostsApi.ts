@@ -19,6 +19,9 @@ class PostsApi {
     static update(body: IEditPostRequest, slug: string) {
         return axiosInstance.put(`/posts/${slug}`, body);
     }
+    static delete(slug: string) {
+        return axiosInstance.delete(`/posts/${slug}`);
+    }
 }
 
 export default PostsApi;

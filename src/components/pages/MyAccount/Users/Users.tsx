@@ -20,7 +20,7 @@ const Users = () => {
     const [clickedUser, setClickedUser] = useState<IUser | undefined>(
         undefined
     );
-    const { mutate: deleteUser } = useDeleteUserMutation();
+    const { mutate: deleteUser, isLoading } = useDeleteUserMutation();
 
     const handleDialogOpen = (user: IUser) => {
         setOpen(true);
@@ -28,9 +28,12 @@ const Users = () => {
     };
     const handleDialogClose = () => setOpen(false);
     const handleUserDelete = () => {
-        setOpen(false);
         if (clickedUser) {
-            deleteUser(clickedUser.id);
+            deleteUser(clickedUser.id, {
+                onSuccess() {
+                    setOpen(false);
+                },
+            });
         }
     };
 
@@ -67,12 +70,16 @@ const Users = () => {
             ) : (
                 renderUsers
             )}
-            <DeleteUserDialog
-                open={open}
-                onClose={handleDialogClose}
-                onAccept={handleUserDelete}
-                user={clickedUser}
-            />
+            {!!clickedUser && (
+                <DeleteUserDialog
+                    open={open}
+                    onClose={handleDialogClose}
+                    onAccept={handleUserDelete}
+                    title={clickedUser.name}
+                    content={`Are you sure you want to delete ${clickedUser.name}?`}
+                    isActionLoading={isLoading}
+                />
+            )}
         </div>
     );
 };

@@ -11,9 +11,9 @@ export const useCreatePostMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation((body: ICreatePostRequest) => PostsApi.create(body), {
-        onSuccess() {
-            queryClient.invalidateQueries(postsKey);
-            queryClient.invalidateQueries(myPostsKey);
+        async onSuccess() {
+            await queryClient.invalidateQueries(postsKey);
+            await queryClient.invalidateQueries(myPostsKey);
             enqueueSnackbar('Post created!', { variant: 'success' });
         },
 

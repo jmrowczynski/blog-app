@@ -24,7 +24,6 @@ const Posts = () => {
     const { search, page } = params;
     const [searchState, setSearchState] = useState(search);
     const [debounceSearch] = useDebounce(searchState, 500);
-
     const posts = useMyPostsQuery({
         page,
         search: debounceSearch,
