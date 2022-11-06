@@ -71,6 +71,7 @@ export interface IPost {
     updated_at: Date;
     user: Omit<IUser, 'updated_at' | 'created_at' | 'email_verified_at'>;
     category?: ICategory;
+    excerpt?: string;
 }
 
 export interface ISinglePostRequest {

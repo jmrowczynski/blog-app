@@ -48,6 +48,7 @@ const Posts = () => {
                             content={post.content}
                             user={post.user}
                             category={post.category}
+                            excerpt={post.excerpt}
                         />
                     </Grid>
                 ))}

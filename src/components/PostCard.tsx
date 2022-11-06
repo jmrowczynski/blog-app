@@ -18,22 +18,12 @@ import { IPost } from '../services/types';
 
 export type PostCardProps = Pick<
     IPost,
-    'title' | 'content' | 'slug' | 'user' | 'category'
+    'title' | 'content' | 'slug' | 'user' | 'category' | 'excerpt'
 >;
 
 const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
-    const { title, content, slug, user, category } = props;
-    const contentRef = useRef<HTMLElement>(null);
-    const [excerpt, setExcerpt] = useState(content);
+    const { title, slug, user, category, excerpt } = props;
     const { isAdmin, user: currentUser } = useAppContext();
-
-    useEffect(() => {
-        if (contentRef?.current) {
-            const firstParagraph = contentRef.current.querySelector('p');
-
-            setExcerpt(firstParagraph?.innerText || content);
-        }
-    }, [content, contentRef]);
 
     return (
         <Card
@@ -53,16 +43,17 @@ const PostCard: React.FunctionComponent<PostCardProps> = (props) => {
                         {category.name}
                     </Typography>
                 )}
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(excerpt),
-                    }}
-                    className="line-clamp-6"
-                    ref={contentRef}
-                    sx={{ marginTop: 2 }}
-                />
+                {!!excerpt && (
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(excerpt),
+                        }}
+                        className="line-clamp-6"
+                        sx={{ marginTop: 2 }}
+                    />
+                )}
             </CardContent>
             <CardActions>
                 <Button size="small" component={Link} to={`${posts}/${slug}`}>

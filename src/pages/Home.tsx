@@ -48,6 +48,7 @@ const Home = () => {
                                     title={post.title}
                                     content={post.content}
                                     user={post.user}
+                                    excerpt={post.excerpt}
                                 />
                             </Grid>
                         ))}
