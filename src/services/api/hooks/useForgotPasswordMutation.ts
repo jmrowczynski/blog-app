@@ -10,8 +10,8 @@ export const useForgotPasswordMutation = () => {
     return useMutation(
         (body: IUserForgotPasswordRequest) => AuthApi.forgot(body),
         {
-            onSuccess() {
-                enqueueSnackbar('Check your email to reset password', {
+            onSuccess(response) {
+                enqueueSnackbar(response.data.status, {
                     variant: 'success',
                 });
             },
