@@ -13,7 +13,6 @@ export interface IUser {
 
 export interface IUserLoginResponse {
     user: IUser;
-    token: string;
 }
 
 export interface IUserLoginRequest {

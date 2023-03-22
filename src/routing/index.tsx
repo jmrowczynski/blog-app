@@ -24,8 +24,8 @@ import { useAppContext } from '../context/app.context';
 import Register from '../pages/Register';
 
 const Routing = () => {
-    const { token, user } = useAppContext();
-    const isLoggedIn = !!token && !!user;
+    const { user } = useAppContext();
+    const isLoggedIn = !!user;
 
     return (
         <Routes>

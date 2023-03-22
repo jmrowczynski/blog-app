@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { axiosInstance } from '../services/api/axios';
+import { useMemo, useState } from 'react';
 import { IUser, IUserLoginResponse } from '../services/types';
 import { isUserAdmin } from '../utils/isUserAdmin';
 
@@ -12,18 +11,8 @@ const getUser = () => {
     return undefined;
 };
 
-const getToken = () => {
-    const storageToken = localStorage.getItem('token');
-    if (storageToken) {
-        return JSON.parse(storageToken);
-    }
-
-    return undefined;
-};
-
 export const useUserLogin = () => {
     const [user, setUser] = useState<IUser | undefined>(getUser());
-    const [token, setToken] = useState<string | undefined>(getToken());
 
     const isAdmin = useMemo(() => {
         if (user?.roles) {
@@ -33,17 +22,9 @@ export const useUserLogin = () => {
         return false;
     }, [user]);
 
-    useEffect(() => {
-        if (token) {
-            axiosInstance.defaults.headers.common.Authorization = token;
-        }
-    }, [token, user?.id]);
-
-    const saveUser = ({ user, token }: IUserLoginResponse) => {
+    const saveUser = ({ user }: IUserLoginResponse) => {
         localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', JSON.stringify(token));
         setUser(user);
-        setToken(token);
     };
 
     const updateUser = (data: IUserLoginResponse['user']) => {
@@ -53,10 +34,8 @@ export const useUserLogin = () => {
 
     const removeUser = () => {
         localStorage.removeItem('user');
-        localStorage.removeItem('token');
         setUser(undefined);
-        setToken(undefined);
     };
 
-    return { user, token, saveUser, removeUser, updateUser, isAdmin };
+    return { user, saveUser, removeUser, updateUser, isAdmin };
 };

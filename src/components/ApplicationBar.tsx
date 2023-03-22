@@ -7,7 +7,7 @@ import { useLogoutMutation } from '../services/api/hooks/useLogoutMutation';
 
 const ApplicationBar: React.FunctionComponent = () => {
     const logoutMutation = useLogoutMutation();
-    const { token, user } = useAppContext();
+    const { user } = useAppContext();
 
     const handleLogout = () => logoutMutation.mutate();
 
@@ -18,7 +18,7 @@ const ApplicationBar: React.FunctionComponent = () => {
                     <Button color="inherit" component={Link} to={home}>
                         Home
                     </Button>
-                    {!token ? (
+                    {!user ? (
                         <>
                             <Button
                                 color="inherit"
